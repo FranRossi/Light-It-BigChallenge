@@ -3,41 +3,34 @@
 use App\Enums\UserRole;
 use Spatie\Permission\Models\Role;
 
-test('users can sign up with valid information', function () {
-    //create role Patient
+beforeEach(function () {
     Role::create(['name' => UserRole::PATIENT]);
-    $data = [
-        'name' => 'John Doe',
-        'email' => 'johndoe@example.com',
-        'password' => 'password',
-        'role' => UserRole::PATIENT->value,
-    ];
+});
 
-    $response = $this->post('api/signup', $data);
 
+$validUserData = [
+    'name' => 'John Doe',
+    'email' => 'johndoe@example.com',
+    'password' => 'password',
+    'role' => UserRole::PATIENT->value,
+];
+
+
+test('users can sign up with valid information', function () use ($validUserData) {
+    $response = $this->post('api/signup', $validUserData);
     $response->assertStatus(200);
-
     $this->assertDatabaseHas('users', [
         'email' => 'johndoe@example.com',
     ]);
 });
 
-test('signup form request validation, wrong email and role', function () {
-    $data = [
-        'name' => 'John Doe',
-        'email' => 'notanemail',
-        'password' => 'securePassword',
-        'role' => 'WrongRole'
-    ];
-
-    $response = $this->post('api/signup', $data);
+test('signup form request validation', function ($userData, $fieldTesting) use ($validUserData) {
+    $userData = array_merge($validUserData, $userData);
+    $response = $this->post('api/signup', $userData);
     $response->assertRedirect();
-
     $errors = session('errors');
-    $this->assertTrue($errors->has('email'));
-    $this->assertTrue($errors->has('role'));
-
-    $this->assertFalse($errors->has('name'));
-    $this->assertFalse($errors->has('password'));
-});
-
+    $this->assertTrue($errors->has($fieldTesting));
+})->with([
+    [['email' => 'notanemail'], 'email'],
+    [['role' => 'WrongRole'], 'role'],
+]);
