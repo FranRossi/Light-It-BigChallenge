@@ -17,3 +17,20 @@ test('users can sign up with valid information', function () {
     ]);
 });
 
+test('signup form request validation', function () {
+    $data = [
+        'name' => 'John Doe',
+        'email' => 'notanemail',
+        'password' => 'pass',
+    ];
+
+    $response = $this->post('api/signup', $data);
+    $response->assertRedirect();
+
+    $errors = session('errors');
+    $this->assertTrue($errors->has('email'));
+
+    $this->assertFalse($errors->has('name'));
+    $this->assertFalse($errors->has('password'));
+});
+
