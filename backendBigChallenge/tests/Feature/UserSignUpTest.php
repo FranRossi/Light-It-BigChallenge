@@ -16,13 +16,17 @@ $validUserData = [
 ];
 
 
-test('users can sign up with valid information', function () use ($validUserData) {
+test('users can sign up with valid information', function ($userData) use ($validUserData) {
+    $userData = array_merge($validUserData, $userData);
     $response = $this->post('api/signup', $validUserData);
     $response->assertStatus(200);
     $this->assertDatabaseHas('users', [
         'email' => 'johndoe@example.com',
     ]);
-});
+})->with([
+    [['role' => UserRole::PATIENT->value]],
+    [['role' => UserRole::DOCTOR->value]],
+]);
 
 test('signup form request validation', function ($userData, $fieldTesting) use ($validUserData) {
     $userData = array_merge($validUserData, $userData);
