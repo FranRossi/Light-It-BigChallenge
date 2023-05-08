@@ -3,27 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SignUpRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 
 class SignUp extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function __invoke(SignUpRequest $request):Response|ResponseFactory
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-        ]);
 
-        $user = User::create($data);
+        $user = User::create($request->validated());
 
-        return response()->json([
-            'message' => 'User created successfully.',
-            'user' => $user,
-        ], 201);
+        $user->assignRole($request['role']);
+
+        return response('User registered successfully', Response::HTTP_OK);
     }
 }
