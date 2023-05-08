@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\SubmissionStatuses;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class SubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(),
+            'symptoms' => fake()->paragraph(),
+            'status' => SubmissionStatuses::Pending,
         ];
     }
 }

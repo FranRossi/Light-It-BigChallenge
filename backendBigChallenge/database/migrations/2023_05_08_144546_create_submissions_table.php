@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('symptoms');
-            $table->string('status')->default(SubmissionStatuses::Pending);
-            $table->foreign('doctor_id')->references('id')->on('users')->nullOnDelete();
+            $table->string('status')->default(SubmissionStatuses::Pending->value);
+            //$table->foreign('doctor_id')->references('id')->on('users')->nullOnDelete();
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
