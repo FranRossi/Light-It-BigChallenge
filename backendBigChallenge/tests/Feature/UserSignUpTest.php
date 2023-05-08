@@ -22,7 +22,7 @@ test('users can sign up with valid information', function () {
     ]);
 });
 
-test('signup form request validation', function () {
+test('signup form request validation, wrong email and role', function () {
     $data = [
         'name' => 'John Doe',
         'email' => 'notanemail',
