@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('symptoms');
+            $table->string('status')->default('pending');
+            $table->foreign('doctor_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
