@@ -5,6 +5,7 @@ use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
     Role::create(['name' => UserRole::PATIENT]);
+    Role::create(['name' => UserRole::DOCTOR]);
 });
 
 
