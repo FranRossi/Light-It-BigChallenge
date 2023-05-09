@@ -13,6 +13,7 @@ $validUserData = [
     'name' => 'John Doe',
     'email' => 'johndoe@example.com',
     'password' => 'password',
+    'password_confirmation' => 'password',
     'role' => UserRole::PATIENT->value,
 ];
 
@@ -20,7 +21,7 @@ $validUserData = [
 test('users can sign up with valid information', function ($userData) use ($validUserData) {
     $userData = array_merge($validUserData, $userData);
     $response = $this->post('api/signup', $validUserData);
-    $response->assertStatus(200);
+    $response->assertStatus(201);
     $this->assertDatabaseHas('users', [
         'email' => 'johndoe@example.com',
     ]);
