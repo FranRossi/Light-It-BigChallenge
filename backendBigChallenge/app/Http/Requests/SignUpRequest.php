@@ -25,9 +25,9 @@ class SignUpRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2'],
-             'email' => ['required', 'email', 'unique:users'],
-             'password' => ['required', 'min:6'],
-             'role' => ['required', new Enum(UserRole::class)]
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:6', 'confirmed'],
+            'role' => ['required', new Enum(UserRole::class)]
         ];
     }
 }
