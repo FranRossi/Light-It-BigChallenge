@@ -7,11 +7,11 @@ use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use Hash;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class SignUp extends Controller
 {
-    public function __invoke(SignUpRequest $request):Response|ResponseFactory
+    public function __invoke(SignUpRequest $request): JsonResponse|ResponseFactory
     {
         $fields = $request->validated();
         $fields['password'] = Hash::make($fields['password']);
@@ -19,6 +19,6 @@ class SignUp extends Controller
 
          $user->assignRole($request['role']);
 
-         return response($user, Response::HTTP_CREATED);
+         return responder()->success($user)->respond(201);
     }
 }
