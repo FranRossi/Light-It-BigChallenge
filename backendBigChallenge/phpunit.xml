@@ -13,9 +13,11 @@
         </testsuite>
     </testsuites>
     <source>
-        <include>
+     <coverage>
+         <include>
             <directory suffix=".php">./app</directory>
         </include>
+     </coverage>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
