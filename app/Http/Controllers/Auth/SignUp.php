@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -17,8 +19,8 @@ class SignUp extends Controller
         $fields['password'] = Hash::make($fields['password']);
         $user = User::create($fields);
 
-         $user->assignRole($request['role']);
+        $user->assignRole($request['role']);
 
-         return responder()->success($user)->respond(201);
+        return responder()->success($user)->respond(201);
     }
 }
