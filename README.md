@@ -1,66 +1,156 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://lightit.io" target="_blank"><img src="https://lightit.io/images/Logo_purple.svg" width="400"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+We help digital health startups, clinics, and medtech companies ideate, design, and develop custom web & mobile applications that transform the future of healthcare.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Install
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Requirements:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Php >= 8.1.0 & Composer
+- Docker
+- `brew install php@8.1 composer` Mac OS X with brew
+- `apt-get install php8.1` Ubuntu with apt-get (use sudo if is necessary)
 
-## Learning Laravel
+### Backend Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone GitHub repo for this project locally:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```
+   git clone git@github.com:FranRossi/Light-It-BigChallenge.git
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. cd into your project and create a copy of your .env file
 
-## Laravel Sponsors
+   ```
+   cd Light-It-BigChallange
+   cp .env.example .env
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. After that you can use laravel sail for running your project with docker.
 
-### Premium Partners
+   ```
+   ./vendor/bin/sail up -d
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+   See more detail below.
 
-## Contributing
+4. When the app is running, to get into the bash container (`sail bash`) you can use the following commands:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```
+   docker exec -it light-it-bigchallenge-laravel.test-1 /bin/bash
+   composer install
+   ```
 
-## Code of Conduct
+### Hooks
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You must activate the hooks in your local git repository. To do so, just run the following command.
 
-## Security Vulnerabilities
+```
+vendor/bin/captainhook install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Executing this will create the hook script located in your .git/hooks directory, for each hook you choose to install while running the command. So now every time git triggers a hook, CaptainHook gets executed.
 
-## License
+If you don't have PHP installed locally or you have installed a different version, you can use Docker to execute CaptainHook. To do so you must install the hooks a bit differently.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+vendor/bin/captainhook install --run-mode=docker --run-exec="docker exec CONTAINER_NAME"
+```
+
+You can choose your preferred docker command e.g.:
+
+```
+docker exec MY_CONTAINER_NAME
+docker run --rm -v $(pwd):/var/www/html MY_IMAGE_NAME
+docker-compose -f docker/docker-compose.yml run --rm -T MY_SERVICE_NAME
+```
+
+If you want to know more you can see de documentation in the official page https://captainhookphp.github.io/captainhook/
+
+## Running
+
+We use Laravel Sail, is a light-weight command-line interface for interacting with Laravel's default Docker development environment. Sail provides a great starting point for building a Laravel application without requiring prior Docker experience.
+
+### Configuring A Bash Alias
+
+By default, Sail commands are invoked using the `vendor/bin/sail` script that is included with all new Laravel applications:
+
+However, instead of repeatedly typing vendor/bin/sail to execute Sail commands, you may wish to configure a Bash alias that allows you to execute Sail's commands more easily:
+
+`alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'`
+
+### Starting & Stopping Sail
+
+`sail up`
+
+To start all the Docker containers in the background, you may start Sail in "detached" mode:
+
+`sail up -d`
+
+To stop all of the containers, you may simply press Control + C to stop the container's execution. Or, if the containers are running in the background, you may use the stop command:
+
+`sail stop`
+
+### Executing Commands
+
+```bash
+# Running Artisan commands on docker...
+php artisan queue:work
+
+# Executing PHP Commands
+php script.php
+
+# Executing Composer Commands
+composer require laravel/sanctum
+
+# Running Tests
+php artisan test
+
+```
+
+For more info <https://laravel.com/docs/9.x/sail>
+
+## Php Standards
+
+Run: `composer fixer` and execute php cs, php cs fixer, php stan and rector.
+
+Read <https://lightit.slite.com/app/docs/rd0tnuQ5w>
+
+## Testing
+
+To run all test you can use:
+`composer test`
+
+## HTTP Codes references
+
+The next list contains the HTTP codes returned by the API and the meaning in the present context:
+
+- HTTP 200 Ok: the request has been processed successfully.
+- HTTP 201 Created: the resource has been created. It's associated with a POST Request.
+- HTTP 204 No Content: the request has been processed successfully but does not need to return an entity-body.
+- HTTP 400 Bad Request: the request could not been processed by the API. You should review the data sent to.
+- HTTP 401 Unauthorized: When the request was performed to the login endpoint, means that credentials are not matching with any. When the request was performed to another endpoint means that the token it's not valid anymore due TTL expiration.
+- HTTP 403 Forbidden: the credentials provided with the request has not the necessary permission to be processed.
+- HTTP 404 Not Found: the endpoint requested does not exist in the API.
+- HTTP 422: the payload sent to the API did not pass the validation process.
+- HTTP 500: an unknown error was triggered during the process.
+
+Please refer to <https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html> for reference
+
+## hosts File
+
+- 127.0.0.1
+
+## System Requirements
+
+- php: 8.1.x
+- php ini configurations:
+  - `upload_max_filesize = 50M`
+  - `post_max_size = 50M`
