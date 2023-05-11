@@ -26,6 +26,10 @@ class Login extends Controller
             ]);
         }
         $token = $user->createToken($request->device_name)->plainTextToken;
-        return response()->json(['token' => $token, 'user' => $user->only(['id', 'name', 'email'])]);
+        $data = [
+            'token' => $token,
+            'user' => $user->only(['id', 'name', 'email']),
+        ];
+        return responder()->success($data)->respond(200);
     }
 }

@@ -28,19 +28,16 @@ test('users can log in with valid credentials', function ($email, $password) {
     ];
     $response = $this->post('api/login', $loginData);
     $response->assertOk();
-    $response->assertJsonStructure(['token', 'user']);
+    $response->assertJsonStructure(['data' => ['token', 'user']]);
 })->with([
     ['email' => 'johndoe@example.com', 'password' => 'password'],
 ]);
 
-test('login form request validation', function ($invalidValue, $invalidField) {
-    $validUserData[$invalidField] = $invalidValue;
-    $response = $this->post('api/login', $validUserData);
-    $response->assertRedirect();
-    $errors = session('errors');
-    // $response->assertStatus(422);
+test('login fails when form request validation check fields', function ($invalidLogin) {
+    $response = $this->postJson('api/login', $invalidLogin);
+    $response->assertStatus(422);
 })->with([
-    [['email' => 'notanemail'], 'email'],
-    [['password' => 'pass'], 'password'],
-    [['device_name' => 'Android'], 'device_name'],
+    [['email' => 'notanemail', 'password' => 'password', 'device_name' => 'Android']],
+    [['email' => 'johndoe@example.com', 'WrongPassword' => 'password', 'device_name' => 'Android']],
+    [['email' => 'johndoe@example.com', 'password' => 'password', 'device_name' => '']],
 ]);
