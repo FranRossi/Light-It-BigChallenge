@@ -7,13 +7,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
-use \Illuminate\Hashing\HashManager;
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 
 class SignUp extends Controller
 {
-    public function __invoke(SignUpRequest $request, HashManager $hash): JsonResponse|ResponseFactory
+    public function __invoke(SignUpRequest $request, Hasher $hash): JsonResponse|ResponseFactory
     {
         $fields = $request->validated();
         $fields['password'] = $hash->make($fields['password']);
