@@ -11,83 +11,42 @@ We help digital health startups, clinics, and medtech companies ideate, design, 
 
 ## Install
 
-Requirements: Php >= 8.1.0 & Composer
+Requirements:
 
+- Php >= 8.1.0 & Composer
+- Docker
 - `brew install php@8.1 composer` Mac OS X with brew
 - `apt-get install php8.1` Ubuntu with apt-get (use sudo if is necessary)
-
-This step is not necessary when you use Docker.
 
 ### Backend Installation
 
 1. Clone GitHub repo for this project locally:
 
    ```
-   git clone git@github.com:Light-it-labs/lightranet
+   git clone git@github.com:FranRossi/Light-It-BigChallenge.git
    ```
 
 2. cd into your project and create a copy of your .env file
 
    ```
-   cd lightranet
+   cd Light-It-BigChallange
    cp .env.example .env
    ```
 
-3. If you have Php installed you can install composer dependencies with sail included with
+3. After that you can use laravel sail for running your project with docker.
 
    ```
-   docker run --rm \
-     -u "$(id -u):$(id -g)" \
-     -v $(pwd):/var/www/html \
-     -w /var/www/html \
-     laravelsail/php81-composer:latest \
-     composer install --ignore-platform-reqs
-   ```
-
-4. After that you can use laravel sail for running your project.
-
-   ```
-   sail up
+   ./vendor/bin/sail up -d
    ```
 
    See more detail below.
 
-5. When the app is running, into the bash container (`sail bash`) you can use the following commands:
+4. When the app is running, to get into the bash container (`sail bash`) you can use the following commands:
 
    ```
-   php artisan key:generate
-   php artisan jwt:secret
-   php artisan jwt:generate-certs
-   php artisan storage:link
-   php artisan ide-helper:generate
-   php artisan migrate --seed
+   docker exec -it light-it-bigchallenge-laravel.test-1 /bin/bash
+   composer install
    ```
-
-### Frontend
-
-You need nvm installed in your machine. https://github.com/nvm-sh/nvm#install--update-script
-
-For frontend enviroment you need install npm dependencies with `npm install` and after that to compile assets for Frontend SPA in local you can run: `npm run dev` or `npm run watch`
-In production environment is necessary run `npm run production`
-
-1. Install npm dependencies:
-
-   ```
-   nvm use
-   npm install
-   ```
-
-2. Run the app:
-
-   ```
-   npm run dev
-   ```
-
-To install the pre-commit hook separately use the following command:
-
-```
-npm run prepare
-```
 
 ### Hooks
 
@@ -142,23 +101,18 @@ To stop all of the containers, you may simply press Control + C to stop the cont
 ### Executing Commands
 
 ```bash
-# Running Artisan commands locally...
+# Running Artisan commands on docker...
 php artisan queue:work
 
-# Running Artisan commands within Laravel Sail...
-sail artisan queue:work
-
 # Executing PHP Commands
-sail php script.php
+php script.php
 
 # Executing Composer Commands
-sail composer require laravel/sanctum
+composer require laravel/sanctum
 
 # Running Tests
-sail test
+php artisan test
 
-# Running with Coverage
-sail composer test
 ```
 
 For more info <https://laravel.com/docs/9.x/sail>
@@ -169,24 +123,10 @@ Run: `composer fixer` and execute php cs, php cs fixer, php stan and rector.
 
 Read <https://lightit.slite.com/app/docs/rd0tnuQ5w>
 
-### Php Insight
-
-#### Config File
-
-You should now have a `config/insights.php` file that allows you to configure the basics of this package.
-
-<https://phpinsights.com/get-started.html>
-
-To run: `sail composer insights`
-
 ## Testing
 
-To run all test and generate report coverage you can use:
-`sail composer test`
-
-In computer science, code coverage is a measure used to describe the degree to which the source code of a program is tested by a particular test suite. A program with high code coverage has been more thoroughly tested and has a lower chance of containing software bugs than a program with low code coverage.
-
-You can see the report open [index.html](reports%2Findex.html) in the reports folder.
+To run all test you can use:
+`composer test`
 
 ## HTTP Codes references
 
@@ -206,16 +146,11 @@ Please refer to <https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html> for re
 
 ## hosts File
 
-- 127.0.0.1 lightranet.test
-- 127.0.0.1 db
-- 127.0.0.1 s3
-- 127.0.0.1 redis
-- 127.0.0.1 mailhog
+- 127.0.0.1
 
 ## System Requirements
 
 - php: 8.1.x
 - php ini configurations:
-  - `upload_max_filesize = 100M`
-  - `post_max_size = 100M`
-  - These numbers are illustrative. Set them according to your project needs.
+  - `upload_max_filesize = 50M`
+  - `post_max_size = 50M`
