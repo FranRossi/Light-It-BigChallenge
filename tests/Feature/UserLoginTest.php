@@ -26,7 +26,7 @@ test('users can log in with valid credentials', function ($email, $password) {
     ];
     $this->post('api/login', $loginData)
         ->assertOk()
-        ->assertJsonStructure(['data' => ['token', 'user']]);
+        ->assertJsonStructure(['data' => ['id', 'name', 'email'], 'token']);
 })->with([
     ['email' => 'johndoe@example.com', 'password' => 'password'],
 ]);
