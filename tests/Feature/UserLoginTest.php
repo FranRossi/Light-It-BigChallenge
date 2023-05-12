@@ -32,10 +32,17 @@ test('users can log in with valid credentials', function ($email, $password) {
 ]);
 
 test('login fails when form request validation check fields', function ($invalidLogin) {
-    $response = $this->postJson('api/login', $invalidLogin);
-    $response->assertUnprocessable();
+    $this->postJson('api/login', $invalidLogin)
+         ->assertUnProcessable();
 })->with([
     [['email' => 'notanemail', 'password' => 'password', 'device_name' => 'Android']],
-    [['email' => 'johndoe@example.com', 'WrongPassword' => 'password', 'device_name' => 'Android']],
+    [['email' => 'johndoe@example.com', '' => 'password', 'device_name' => 'Android']],
     [['email' => 'johndoe@example.com', 'password' => 'password', 'device_name' => '']],
+]);
+
+test('login fails when credentials are wrong', function ($invalidLogin) {
+    $this->postJson('api/login', $invalidLogin)
+         ->assertUnauthorized();
+})->with([
+    [['email' => 'martin@example.com', 'password' => 'password', 'device_name' => 'Android']],
 ]);
