@@ -1,10 +1,9 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Hash;
-use App\Enums\UserRole;
 use Spatie\Permission\Models\Role;
-
 
 beforeEach(function () {
     Role::create(['name' => UserRole::PATIENT]);
