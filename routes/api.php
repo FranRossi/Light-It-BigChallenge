@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\SignUp;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,24 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/signup', SignUp::class);
 
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-    $token = $user->createToken($request->device_name)->plainTextToken;
-         $data = [
-             'token' => $token,
-             'user' => $user->only(['id', 'name', 'email']),
-         ];
-         return responder()->success($data)->respond(200);
-});
+Route::post('/login', Login::class);
