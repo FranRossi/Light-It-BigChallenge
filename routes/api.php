@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\SignUp;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,3 +27,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup', SignUp::class);
 
 Route::post('/login', Login::class);
+
+Route::middleware('auth:sanctum')->post('/logout', Logout::class);
