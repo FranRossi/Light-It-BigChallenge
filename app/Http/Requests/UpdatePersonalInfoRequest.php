@@ -13,7 +13,7 @@ class UpdatePersonalInfoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update personal info');
     }
 
     /**
