@@ -30,4 +30,3 @@ test("user logged, can update personal info", function () {
         'other_info' => 'Blood type A+',
     ]);
 });
-
