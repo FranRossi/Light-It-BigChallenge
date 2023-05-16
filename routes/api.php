@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\SignUp;
+use App\Http\Controllers\UpdatePersonalInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,19 +21,17 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::put('/update', UpdatePersonalInfo::class);
+
+    Route::post('/logout', Logout::class);
 });
 
 Route::post('/signup', SignUp::class);
 
 Route::post('/login', Login::class);
 
-Route::middleware('auth:sanctum')->post('/logout', Logout::class);
-
-
-Route::middleware('auth:sanctum')->put('/user/{user}', function (Request $request) {
-    $user = $request->user();
-    $user->update($request->all());
-    return $user;
-});
