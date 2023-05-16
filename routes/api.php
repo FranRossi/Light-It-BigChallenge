@@ -29,3 +29,10 @@ Route::post('/signup', SignUp::class);
 Route::post('/login', Login::class);
 
 Route::middleware('auth:sanctum')->post('/logout', Logout::class);
+
+
+Route::middleware('auth:sanctum')->put('/user/{user}', function (Request $request) {
+    $user = $request->user();
+    $user->update($request->all());
+    return $user;
+});
