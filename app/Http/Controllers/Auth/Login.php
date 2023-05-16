@@ -17,7 +17,9 @@ class Login extends Controller
     public function __invoke(LoginPostRequest $request): JsonResponse|ResponseFactory
     {
         if (! Auth::attempt($request->only('email', 'password'))) {
-            return responder()->error('Invalid credentials')->respond(401);
+            return responder()
+            ->error(Response::HTTP_UNAUTHORIZED, 'Invalid credentials')
+            ->respond(Response::HTTP_UNAUTHORIZED);
         }
 
         $userLogged = $request->user();
