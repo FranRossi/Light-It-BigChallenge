@@ -42,6 +42,7 @@ class UserFactory extends Factory
     public function doctor(): UserFactory
     {
         return $this->afterCreating(function (User $user) {
+            $doctorRole = Role::findOrCreate(UserRole::DOCTOR->value);
             $user->assignRole(UserRole::DOCTOR->value);
         });
     }
