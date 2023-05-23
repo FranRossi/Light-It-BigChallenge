@@ -25,8 +25,8 @@ class UpdatePersonalInfoRequest extends FormRequest
     {
         return [
            'phone' => ['required'],
-           'weight' => ['required'],
-           'height' => ['required'],
+           'weight' => ['required', 'numeric'],
+           'height' => ['required', 'numeric'],
            'other_info' => ['sometimes', 'nullable', 'max:255'],
         ];
     }

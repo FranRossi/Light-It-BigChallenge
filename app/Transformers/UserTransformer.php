@@ -31,10 +31,22 @@ class UserTransformer extends Transformer
      */
     public function transform(User $user)
     {
+        $role = $this->getUserRole($user);
         return [
             'id' => (int) $user->id,
             'name' => (string) $user->name,
             'email' => (string) $user->email,
+            'role' => (string) $role,
+            'phone_number' => (string) ($user->phone) ?? null,
+            'weight' => ((string) $user->weight) ?? null,
+            'height' => (string) $user->height ?? null,
+            'other_info' => (string) $user->other_info ?? null,
         ];
+    }
+
+    protected function getUserRole(User $user): ?string
+    {
+        $role = $user->roles->first();
+        return $role?->name;
     }
 }
