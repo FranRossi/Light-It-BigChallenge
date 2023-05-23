@@ -33,7 +33,7 @@ test('can update a patient info', function ($body) {
     ]],
 ]);
 
-test ('Form request validation is working', function ($body) {
+test('Form request validation is working', function ($body) {
     $patient = UserFactory::new()->patient()->create();
     Sanctum::actingAs($patient);
 
@@ -54,7 +54,7 @@ test ('Form request validation is working', function ($body) {
     ]]
     ]);
 
-test ('only patients can update their info', function () {
+test('only patients can update their info', function () {
     $doctor = UserFactory::new()->doctor()->create();
     Sanctum::actingAs($doctor);
 
