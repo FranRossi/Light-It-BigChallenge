@@ -14,8 +14,6 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
         Permission::create(['name' => 'update personal info']);
 
         Role::create(['name' => UserRole::PATIENT->value])->givePermissionTo('update personal info');

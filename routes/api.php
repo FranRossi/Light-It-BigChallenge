@@ -22,9 +22,7 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', fn (Request $request) => $request->user());
 
     Route::put('/update', UpdatePersonalInfo::class);
 
