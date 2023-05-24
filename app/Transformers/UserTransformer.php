@@ -26,15 +26,18 @@ class UserTransformer extends Transformer
     /**
      * Transform the model.
      *
-     *
-     * @return array
      */
-    public function transform(User $user)
+    public function transform(User $user): array
     {
         return [
-            'id' => (int) $user->id,
-            'name' => (string) $user->name,
-            'email' => (string) $user->email,
+            'id' =>  $user->id,
+            'name' =>  $user->name,
+            'email' =>  $user->email,
+            'role' =>  $user->roles->first()?->name,
+            'phone_number' => $user?->phone,
+            'weight' => $user?->weight,
+            'height' => $user?->height,
+            'other_info' =>$user?->other_info,
         ];
     }
 }

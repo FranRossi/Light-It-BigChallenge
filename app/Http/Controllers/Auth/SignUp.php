@@ -7,9 +7,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
+use App\Transformers\UserTransformer;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class SignUp extends Controller
 {
@@ -21,6 +23,6 @@ class SignUp extends Controller
 
         $user->assignRole($request['role']);
 
-        return responder()->success($user)->respond(201);
+        return responder()->success($user, UserTransformer::class)->respond(Response::HTTP_CREATED);
     }
 }
