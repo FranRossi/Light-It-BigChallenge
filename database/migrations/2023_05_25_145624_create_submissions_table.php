@@ -13,7 +13,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('symptoms');
+            $table->unsignedBigInteger('doctor_id')->nullable();
             $table->foreign('doctor_id')->references('id')->on('users')->nullOnDelete();
+            $table->unsignedBigInteger('patient_id')->nullable();
             $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('status', SubmissionStatus::toArray())->default(SubmissionStatus::PENDING->value);
             $table->timestamps();
