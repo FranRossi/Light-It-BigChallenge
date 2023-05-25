@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\SignUp;
+use App\Http\Controllers\StoreSubmission;
 use App\Http\Controllers\UpdatePersonalInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,6 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/update', UpdatePersonalInfo::class);
 
     Route::post('/logout', Logout::class);
+
+    Route::post('/submissions', StoreSubmission::class);
 });
 
 Route::post('/signup', SignUp::class);
