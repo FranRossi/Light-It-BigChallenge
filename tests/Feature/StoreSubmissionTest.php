@@ -15,12 +15,12 @@ it('check doctor cannot create a submission', function () {
     $response->assertForbidden();
 });
 
-test('user is logged before creating submission', function (){
+test('user is logged before creating submission', function () {
     $response = $this->postJson('api/submissions', []);
     $response->assertUnauthorized();
 });
 
-test('patient can create a submission', function (){
+test('patient can create a submission', function () {
     $patient = UserFactory::class::new()->patient()->create();
     Sanctum::actingAs($patient);
 
@@ -35,4 +35,3 @@ test('patient can create a submission', function (){
         'symptoms' => 'Submission description',
     ]);
 });
-

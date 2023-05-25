@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\SubmissionStatus;
 use App\Http\Requests\StoreSubmissionRequest;
+use App\Transformers\SubmissionTransformer;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -18,6 +19,6 @@ class StoreSubmission extends Controller
         $data = $request->validated();
         $data['status'] = SubmissionStatus::PENDING->value;
         $submission = $user->submissionsPatient()->create($data);
-        return responder()->success($submission)->respond(Response::HTTP_CREATED);
+        return responder()->success($submission, SubmissionTransformer::class)->respond(Response::HTTP_CREATED);
     }
 }
