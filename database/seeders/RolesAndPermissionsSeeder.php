@@ -15,8 +15,9 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         Permission::create(['name' => 'update personal info']);
+        Permission::create(['name' => 'create submission']);
 
-        Role::create(['name' => UserRole::PATIENT->value])->givePermissionTo('update personal info');
-        Role::create(['name' => UserRole::DOCTOR->value]);
+        Role::findOrCreate(UserRole::PATIENT->value)->givePermissionTo('update personal info');
+        Role::findOrCreate(UserRole::DOCTOR->value);
     }
 }
