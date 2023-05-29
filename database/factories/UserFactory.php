@@ -34,7 +34,9 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user) {
             $patientRole = Role::findOrCreate(UserRole::PATIENT->value);
             Permission::findOrCreate('update personal info');
+            Permission::findOrCreate('create submission');
             $patientRole->givePermissionTo('update personal info');
+            $patientRole->givePermissionTo('create submission');
             $user->assignRole(UserRole::PATIENT->value);
         });
     }

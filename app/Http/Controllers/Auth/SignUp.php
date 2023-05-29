@@ -9,13 +9,12 @@ use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Contracts\Hashing\Hasher;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class SignUp extends Controller
 {
-    public function __invoke(SignUpRequest $request, Hasher $hash): JsonResponse|ResponseFactory
+    public function __invoke(SignUpRequest $request, Hasher $hash): JsonResponse
     {
         $fields = $request->validated();
         $fields['password'] = $hash->make($fields['password']);
