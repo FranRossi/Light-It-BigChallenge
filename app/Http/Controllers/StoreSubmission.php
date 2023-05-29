@@ -7,13 +7,12 @@ namespace App\Http\Controllers;
 use App\Enums\SubmissionStatus;
 use App\Http\Requests\StoreSubmissionRequest;
 use App\Transformers\SubmissionTransformer;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class StoreSubmission extends Controller
 {
-    public function __invoke(StoreSubmissionRequest $request): JsonResponse|ResponseFactory
+    public function __invoke(StoreSubmissionRequest $request): JsonResponse
     {
         $user = $request->user();
         $data = $request->validated();

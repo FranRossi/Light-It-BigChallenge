@@ -6,12 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePersonalInfoRequest;
 use App\Transformers\UserTransformer;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 
 class UpdatePersonalInfo extends Controller
 {
-    public function __invoke(UpdatePersonalInfoRequest $request): JsonResponse|ResponseFactory
+    public function __invoke(UpdatePersonalInfoRequest $request): JsonResponse
     {
         $user = $request->user();
 
